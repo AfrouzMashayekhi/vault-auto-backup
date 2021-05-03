@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: vault-stg
+  name: vault-backup
+  labels:
+    app: vault-backup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vault-backup
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: vault-backup
+    spec:
+      containers:
+        - image: afrouzmash/vault-backup:v1
+          imagePullPolicy: Always
+          name: vault-backup
+          resources:
+            limits:
+              memory: 500Mi
+            requests:
+              memory: 100Mi
+          envFrom:
+            - secretRef:
+                name: vault-backup-secret
+          volumeMounts:
+            - name: backup
+              mountPath: /backup
+      volumes:
+        - name: backup
+          persistentVolumeClaim:
+            claimName: vault-backup
+
