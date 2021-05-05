@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: vault-stg
+  namespace: vault-stage
   name: vault-backup
   labels:
     app: vault-backup
@@ -19,7 +19,11 @@ spec:
         app: vault-backup
     spec:
       containers:
-        - image: afrouzmash/vault-backup:v1
+        - image: docker.omidanalyzer.com:444/afrouzmash/consul-auto-backup:v5
+          args:
+            - ./setup.sh
+          command:
+            - /bin/sh
           imagePullPolicy: Always
           name: vault-backup
           resources:

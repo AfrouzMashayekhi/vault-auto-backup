@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: backup-vault-pvc
-  namespace: vault-stg
+  name: vault-backup
+  namespace: vault-stage
 spec:
   accessModes:
     - ReadWriteOnce
